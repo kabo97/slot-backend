@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace BackendAPI.Models{
     public class Slot
     {
@@ -6,8 +8,9 @@ namespace BackendAPI.Models{
         public DateTime EndTime { get; set; }
         public bool IsAvailable { get; set; }
         public string Status { get; set; } = "Available";
-        public string CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public int CreatedByUserId { get; set; }
+        [ForeignKey("CreatedByUserId")]
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? ModifiedOn { get; set; }
     }
 }

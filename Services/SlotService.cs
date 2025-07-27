@@ -24,7 +24,9 @@ namespace BackendAPI.Services
 
         public async Task<Slot> CreateSlotAsync(Slot slot)
         {
-            slot.CreatedOn = DateTime.Now;
+            slot.StartTime = DateTime.SpecifyKind(slot.StartTime, DateTimeKind.Utc);
+            slot.EndTime = DateTime.SpecifyKind(slot.EndTime, DateTimeKind.Utc);
+            slot.CreatedOn = DateTime.UtcNow;
             _context.Slots.Add(slot);
             await _context.SaveChangesAsync();
             return slot;
@@ -40,7 +42,8 @@ namespace BackendAPI.Services
             slot.StartTime = updatedSlot.StartTime;
             slot.EndTime = updatedSlot.EndTime;
             slot.IsAvailable = updatedSlot.IsAvailable;
-            slot.ModifiedOn = DateTime.Now;
+            slot.ModifiedOn = DateTime.UtcNow;
+
 
             await _context.SaveChangesAsync();
             return slot;
