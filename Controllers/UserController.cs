@@ -21,6 +21,18 @@ namespace BackendAPI.Controllers
         {
             return await _context.Users.ToListAsync();
         }
+        
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUserById(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(User user)

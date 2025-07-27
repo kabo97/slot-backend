@@ -1,5 +1,7 @@
 using BackendAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using BackendAPI.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<ISlotService, SlotService>();
 builder.Services.AddControllers(); 
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowAll", builder =>
