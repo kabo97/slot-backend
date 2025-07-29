@@ -9,7 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>(options =>options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+var configConn = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = configConn == "UseAzureEnv"
+    ? Environment.GetEnvironmentVariable("AZURE_DB_CONNECTION")
+    : configConn;
+
+builder.Services.AddDbContext<AppDbContext>(options =>options.UseNpgsql(connectionString));
 builder.Services.AddScoped<ISlotService, SlotService>();
 builder.Services.AddControllers(); 
 builder.Services.AddCors(options => {
