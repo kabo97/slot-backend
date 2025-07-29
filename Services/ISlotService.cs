@@ -7,6 +7,7 @@ namespace BackendAPI.Services
     public interface ISlotService
     {
         Task<IEnumerable<Slot>> GetAvailableSlotsAsync();
+        Task<IEnumerable<Slot>> GetAllSlotsAsync();
         Task<Slot> CreateSlotAsync(Slot slot);
         Task<Slot> UpdateSlotAsync(int id, Slot slot);
         Task<bool> DeleteSlotAsync(int id);

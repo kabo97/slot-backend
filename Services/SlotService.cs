@@ -21,6 +21,10 @@ namespace BackendAPI.Services
                 .Where(s => s.IsAvailable && s.Status == "Available")
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Slot>> GetAllSlotsAsync()
+        {
+            return await _context.Slots.ToListAsync();
+        }
 
         public async Task<Slot> CreateSlotAsync(Slot slot)
         {
@@ -42,6 +46,7 @@ namespace BackendAPI.Services
             slot.StartTime = updatedSlot.StartTime;
             slot.EndTime = updatedSlot.EndTime;
             slot.IsAvailable = updatedSlot.IsAvailable;
+            slot.Status = updatedSlot.Status;
             slot.ModifiedOn = DateTime.UtcNow;
 
 

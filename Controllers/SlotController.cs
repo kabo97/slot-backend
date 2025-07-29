@@ -22,6 +22,12 @@ namespace BackendAPI.Controllers{
             var slots = await _slotService.GetAvailableSlotsAsync();
             return Ok(slots);
         }
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllSlots()
+        {
+            var slots = await _slotService.GetAllSlotsAsync();
+            return Ok(slots);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateSlot(Slot slot)

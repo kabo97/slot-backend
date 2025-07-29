@@ -21,7 +21,7 @@ namespace BackendAPI.Controllers
         {
             return await _context.Users.ToListAsync();
         }
-        
+
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
@@ -42,5 +42,22 @@ namespace BackendAPI.Controllers
 
             return CreatedAtAction(nameof(GetUsers), new { id = user.UserId }, user);
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var email = request.Email.Trim().ToLower();
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email);
+            if (user == null)
+                return NotFound("User not found");
+
+            return Ok(user);
+        }
+        
+
+        public class LoginRequest
+        {
+            public string Email { get; set; }
+        }
+
     }
 }
